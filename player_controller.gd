@@ -8,44 +8,29 @@ var speed = 500
 var map : TileMap
 const floor_index = 8 # index into tilemap
 
-var corners : Line2D
+var device_id = -1
 
-# Called when the node enters the scene tree for the first time.
 func _ready():
 	map = get_node("/root/Node2D/TileMap")
 	if map == null:
 		printerr("Couldn't find TileMap in the scene tree!")
-	Input.connect("joy_connection_changed",self,"joy_connected")
-	# corners = get_node("corners")
-	# if corners == null:
-	# 	printerr("Cound't find corners in children!")
-func joy_connected(device_id,connected):
-	if connected:
-		print(device_id," ",Input.get_joy_name(device_id))
-	else:
-		print("KEYBOARDDD!")
 
-# Called every frame. 'delta' is the elapsed time since the previous frame.
+func _unhandled_input(event):
+	if event is InputEventJoypadButton:
+		if event.pressed and event.button_index == JOY_XBOX_A:
+			device_id = event.device
+			print("You are device: ",device_id)
+
 func _process(delta):
-	# var old_pos = position
-	var vel = Vector2(0,0)
-	vel += Vector2(speed * delta * Input.get_action_strength("move_right"),0)
-	vel -= Vector2(speed * delta * Input.get_action_strength("move_left"),0)
-	vel -= Vector2(0,speed * delta * Input.get_action_strength("move_up"))
-	vel += Vector2(0,speed * delta * Input.get_action_strength("move_down"))
-	move_and_slide(vel * delta * speed)
-
-
-	# for x in corners.points:
-	# 	if map.get_cellv(map.world_to_map(position + x)) != floor_index:
-	# 		position = old_pos
-	# 		break
-	
-
-	# if Input.is_action_pressed("ui_down"):
-	# 	position += Vector2(0,speed * delta)
-	# if Input.is_action_pressed("ui_left"):
-	# 	position -= Vector2(speed * delta,0)
-	# if Input.is_action_pressed("ui_up"):
-	# 	position -= Vector2(0,speed * delta)
-	
+	if device_id != -1:
+		var dead = 0.5
+		var vel = Vector2(0,0)
+		var tmp : float = speed * delta * Input.get_joy_axis(device_id,JOY_AXIS_0)
+		if abs(tmp) > dead*speed*delta:
+			print(tmp)
+			vel += Vector2(tmp,0)
+		tmp =  speed * delta * Input.get_joy_axis(device_id,JOY_AXIS_1)
+		if abs(tmp) > dead*speed*delta:
+			print(tmp)
+			vel += Vector2(0,tmp)
+		move_and_slide(vel * delta * speed)
