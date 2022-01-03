@@ -15,10 +15,15 @@ func _ready():
 	map = get_node("/root/Node2D/TileMap")
 	if map == null:
 		printerr("Couldn't find TileMap in the scene tree!")
+	Input.connect("joy_connection_changed",self,"joy_connected")
 	# corners = get_node("corners")
 	# if corners == null:
 	# 	printerr("Cound't find corners in children!")
-
+func joy_connected(device_id,connected):
+	if connected:
+		print(device_id," ",Input.get_joy_name(device_id))
+	else:
+		print("KEYBOARDDD!")
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta):
