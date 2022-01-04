@@ -28,3 +28,14 @@ func _process(delta):
 		if abs(tmp) > dead*speed*delta:
 			vel += Vector2(0,tmp)
 		move_and_slide(vel * delta * speed)
+#	else:
+#		var vel = Vector2(0,0)
+#		if Input.is_action_pressed("move_right"):
+#			vel +=Vector2(speed*delta,0)
+#		if Input.is_action_pressed("move_left"):
+#			vel -=Vector2(speed*delta,0)
+#		if Input.is_action_pressed("move_up"):
+#			vel -=Vector2(speed*delta)
+#		if Input.is_action_pressed("move_down"):
+#			vel +=Vector2(speed*delta,0)
+#		move_and_slide(vel * delta * speed)
