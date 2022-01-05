@@ -1,17 +1,17 @@
 extends Sprite
 
 var speed=500
-var gbutt_pressed : Texture = load("res://images/Controller/green/sprite_green1.png")
-var gbutt_unpressed : Texture = load("res://images/Controller/green/sprite_green0.png")
+var gbutt_pressed : Texture = preload("res://images/Controller/green/sprite_green1.png")
+var gbutt_unpressed : Texture = preload("res://images/Controller/green/sprite_green0.png")
 
-var rbutt_pressed : Texture = load("res://images/Controller/red/sprite_red1.png")
-var rbutt_unpressed : Texture = load("res://images/Controller/red/sprite_red0.png")
+var rbutt_pressed : Texture = preload("res://images/Controller/red/sprite_red1.png")
+var rbutt_unpressed : Texture = preload("res://images/Controller/red/sprite_red0.png")
 
-var ybutt_pressed : Texture = load("res://images/Controller/yellow/sprite_yellow1.png")
-var ybutt_unpressed : Texture = load("res://images/Controller/yellow/sprite_yellow0.png")
+var ybutt_pressed : Texture = preload("res://images/Controller/yellow/sprite_yellow1.png")
+var ybutt_unpressed : Texture = preload("res://images/Controller/yellow/sprite_yellow0.png")
 
-var bbutt_pressed : Texture = load("res://images/Controller/blue/sprite_blue1.png")
-var bbutt_unpressed : Texture = load("res://images/Controller/blue/sprite_blue0.png")
+var bbutt_pressed : Texture = preload("res://images/Controller/blue/sprite_blue1.png")
+var bbutt_unpressed : Texture = preload("res://images/Controller/blue/sprite_blue0.png")
 
 # Declare member variables here. Examples:
 # var a = 2
