@@ -1,0 +1,44 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://scripts/rat_controller.gd" type="Script" id=1]
+[ext_resource path="res://images/rat.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 4, 1 )
+
+[sub_resource type="RectangleShape2D" id=6]
+extents = Vector2( 4, 1 )
+
+[node name="Rat" type="KinematicBody2D" groups=["players"]]
+script = ExtResource( 1 )
+device_id = -1
+
+[node name="Sprite" type="Sprite" parent="."]
+texture = ExtResource( 2 )
+
+[node name="dash_time" type="Timer" parent="."]
+one_shot = true
+
+[node name="collide" type="CollisionShape2D" parent="."]
+position = Vector2( 0, 1 )
+shape = SubResource( 5 )
+
+[node name="health_bar" type="ColorRect" parent="."]
+anchor_left = 0.5
+anchor_right = 0.5
+margin_left = -1.0
+margin_top = -8.0
+margin_right = 2.0
+margin_bottom = -6.0
+rect_pivot_offset = Vector2( 0, 9 )
+color = Color( 0.870588, 0.345098, 0.345098, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="test_area" type="Area2D" parent="."]
+gravity_vec = Vector2( 0, 0 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="test_area"]
+position = Vector2( 0, 1 )
+shape = SubResource( 6 )

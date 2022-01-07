@@ -29,13 +29,12 @@ func on_timer_done(player):
 		start_anime.start_anime()
 
 
-func _unhandled_input(event):
+func _input(event):
 	if event is InputEventJoypadButton:
 		if event.pressed and event.button_index == JOY_XBOX_A:
 			#check to see if it is player one (they want to start the game)
 			if event.device == PlayerData.players[0].device:
 				#start the game
-				print("The game has started")
 				start_button.texture = butt_pressed
 				start_timer.start(.2)
 				return
@@ -46,6 +45,7 @@ func _unhandled_input(event):
 					break
 				if PlayerData.players[i].device == -1:
 					PlayerData.players[i].device = event.device
+					PlayerData.players[i].character = Characters__.Characters.rat
 					print(Input.get_joy_name(PlayerData.players[i].device)," (",event.device,") has connected!")
 
 					# Set the button to be pressed for a frame
@@ -58,6 +58,12 @@ func _unhandled_input(event):
 					break
 				print("Multiplayer has not been implemented yet!")
 				break
-
-# func _process(delta):
-# 	for i in range(4):
+		if event.pressed and event.button_index == JOY_XBOX_X:
+			var before = PlayerData.players[PlayerData.has_device(event.device)].character
+			PlayerData.players[PlayerData.has_device(event.device)].character = wrapi(before-1,0,Characters__.Characters.size())
+			get_tree().set_input_as_handled()
+		if event.pressed and event.button_index == JOY_XBOX_B:
+			var before = PlayerData.players[PlayerData.has_device(event.device)].character
+			PlayerData.players[PlayerData.has_device(event.device)].character = wrapi(before+1,0,Characters__.Characters.size())
+			get_tree().set_input_as_handled()
+			

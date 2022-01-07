@@ -1,20 +1,19 @@
-extends KinematicBody2D
+extends BaseController
+tool # required for BaseController's 'tool' keyword to work
 
 var speed = 50
-const floor_index = 8 # index into tilemap
-
-var device_id = PlayerData.players[0].device
-
 onready var dash_time : Timer = $"dash_time"
 var can_input = true
 var velocity = Vector2(0,0)
+
+
 
 func _ready():
 	dash_time.connect("timeout",self,"on_dash_end")
 
 func on_dash_end():
-	print("dash has ended")
 	can_input = true
+#	$collide.disable = false
 
 func get_joy_direction():
 	var dead = 0.25
@@ -34,10 +33,11 @@ func _physics_process(delta):
 		velocity = vel
 		if vel != Vector2(0,0):
 			rotation = vel.angle()
+			health_bar.rect_rotation = rad2deg(-rotation)
 	else:
+		#we are dashing
 		move_and_slide(velocity,Vector2(0,0),true)
-		
-		if get_slide_count() != 0:
+		if get_slide_count() > 0:
 			velocity = Vector2(0,0)
 			can_input = true
 			dash_time.stop()
@@ -46,8 +46,8 @@ func _input(event):
 	if event is InputEventJoypadButton:
 		if event.is_pressed() and event.button_index == JOY_XBOX_A:
 			# dash
-			var vel = get_joy_direction()
-			velocity = vel * speed * 2
+			velocity = Vector2(cos(rotation),sin(rotation)) * speed * 2
+			dash_time.start(0.5)
 			# disable other movement input
 			can_input = false
-			dash_time.start(0.5)
+#			$collide.disable = true
