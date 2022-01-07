@@ -15,3 +15,6 @@ func set_health(h):
 	health_bar.rect_size.x = h
 	health_bar.rect_position.x = -h/2
 	health = h
+	if health <= 0:
+		queue_free() # adds a "free" to the queue. next frame this node will be 
+		# deleted

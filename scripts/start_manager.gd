@@ -1,13 +1,12 @@
 extends HBoxContainer
-
 onready var players : Array =  [$"Control/AButton",$"Control2/AButton",$"Control3/AButton",$"Control4/AButton"]
 onready var timers : Array =  [$"Control/Timer",$"Control2/Timer",$"Control3/Timer",$"Control4/Timer"]
 # var devices : Array = [-1,-1,-1,-1]
 onready var start_timer : Timer = $"Control/CharacterBar/start_mask/TopStart/AButton/Timer"
 onready var start_button : Sprite = $"Control/CharacterBar/start_mask/TopStart/AButton"
 
-var butt_pressed : Texture = load("res://images/a_button_pressed.png")
-var butt_unpressed : Texture = load("res://images/a_button.png")
+var butt_pressed : Texture = preload("res://images/a_button_pressed.png")
+var butt_unpressed : Texture = preload("res://images/a_button.png")
 
 onready var start_anime = $"Control/CharacterBar/start_mask/TopStart"
 
@@ -28,6 +27,11 @@ func on_timer_done(player):
 	if player == 0:
 		start_anime.start_anime()
 
+func is_registered(device):
+	for i in range(4):
+		if PlayerData.players[i].device == device:
+			return true
+	return false
 
 func _input(event):
 	if event is InputEventJoypadButton:
@@ -58,12 +62,13 @@ func _input(event):
 					break
 				print("Multiplayer has not been implemented yet!")
 				break
-		if event.pressed and event.button_index == JOY_XBOX_X:
-			var before = PlayerData.players[PlayerData.has_device(event.device)].character
-			PlayerData.players[PlayerData.has_device(event.device)].character = wrapi(before-1,0,Characters__.Characters.size())
-			get_tree().set_input_as_handled()
-		if event.pressed and event.button_index == JOY_XBOX_B:
-			var before = PlayerData.players[PlayerData.has_device(event.device)].character
-			PlayerData.players[PlayerData.has_device(event.device)].character = wrapi(before+1,0,Characters__.Characters.size())
-			get_tree().set_input_as_handled()
+		if is_registered(event.device):
+			if event.pressed and event.button_index == JOY_XBOX_X:
+				var before = PlayerData.players[PlayerData.has_device(event.device)].character
+				PlayerData.players[PlayerData.has_device(event.device)].character = wrapi(before-1,0,Characters__.Characters.size())
+				get_tree().set_input_as_handled()
+			if event.pressed and event.button_index == JOY_XBOX_B:
+				var before = PlayerData.players[PlayerData.has_device(event.device)].character
+				PlayerData.players[PlayerData.has_device(event.device)].character = wrapi(before+1,0,Characters__.Characters.size())
+				get_tree().set_input_as_handled()
 			

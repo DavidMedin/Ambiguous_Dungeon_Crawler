@@ -7,9 +7,11 @@
 extents = Vector2( 4, 1 )
 
 [sub_resource type="RectangleShape2D" id=6]
-extents = Vector2( 4, 1 )
+extents = Vector2( 4, 1.5 )
 
 [node name="Rat" type="KinematicBody2D" groups=["players"]]
+collision_layer = 2
+collision_mask = 3
 script = ExtResource( 1 )
 device_id = -1
 
@@ -37,8 +39,10 @@ __meta__ = {
 }
 
 [node name="test_area" type="Area2D" parent="."]
+collision_layer = 2
+collision_mask = 2
 gravity_vec = Vector2( 0, 0 )
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="test_area"]
-position = Vector2( 0, 1 )
+position = Vector2( 0, 0.5 )
 shape = SubResource( 6 )
