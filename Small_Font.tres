@@ -3,7 +3,8 @@
 [ext_resource path="res://Font.tres" type="DynamicFontData" id=1]
 
 [resource]
-size = 11
+size = 20
 outline_size = 2
 outline_color = Color( 0, 0, 0, 1 )
+extra_spacing_top = 1
 font_data = ExtResource( 1 )
